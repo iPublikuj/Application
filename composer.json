@@ -3,7 +3,7 @@
 	"type"				: "library",
 	"description"		: "Add default extensions to nette application",
 	"keywords"			: ["nette", "application"],
-	"homepage"			: "https://bitbucket.org/ipublikuj-eu/application.git",
+	"homepage"			: "https://github.com/iPublikuj/application.git",
 	"license"			: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"minimum-stability"	: "dev",
 
@@ -16,7 +16,7 @@
 
 	"support":{
 		"email"		:"support@ipublikuj.eu",
-		"issues"	:"https://bitbucket.org/ipublikuj-eu/application/issues"
+		"issues"	:"https://github.com/iPublikuj/application/issues"
 	},
 
 	"require": {
