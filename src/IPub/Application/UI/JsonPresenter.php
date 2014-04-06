@@ -14,13 +14,10 @@
 
 namespace IPub\Application\UI;
 
-<<<<<<< HEAD
 use Nette;
 
 use IPub\Application\Responses;
 
-=======
->>>>>>> 95195fa21e6734a5aaa443f2e0ef02e20f86b24e
 abstract class JsonPresenter extends Presenter
 {
 	/**
@@ -29,16 +26,11 @@ abstract class JsonPresenter extends Presenter
 	protected $compileVariables = FALSE;
 
 	/**
-<<<<<<< HEAD
 	 * @var Responses\JSONResponse
-=======
-	 * @var \IPub\Application\Responses\Json
->>>>>>> 95195fa21e6734a5aaa443f2e0ef02e20f86b24e
 	 */
 	protected $response;
 
 	/**
-<<<<<<< HEAD
 	 * @return Responses\JSONResponse
 	 */
 	protected function createResponse()
@@ -48,17 +40,6 @@ abstract class JsonPresenter extends Presenter
 
 	/**
 	 * @return Responses\JSONResponse
-=======
-	 * @return \IPub\Application\Responses\Json
-	 */
-	protected function createResponse()
-	{
-		return new \IPub\Application\Responses\Json($this->compileVariables);
-	}
-
-	/**
-	 * @return \IPub\Application\Responses\Json
->>>>>>> 95195fa21e6734a5aaa443f2e0ef02e20f86b24e
 	 */
 	public function getResponse()
 	{
@@ -74,19 +55,11 @@ abstract class JsonPresenter extends Presenter
 	 *
 	 * @return void
 	 *
-<<<<<<< HEAD
 	 * @throws Nette\InvalidStateException
 	 */
 	protected function createTemplate($class = NULL)
 	{
 		throw new Nette\InvalidStateException("Json presenter does not support access to \$template use \$response instead.");
-=======
-	 * @throws \Nette\InvalidStateException
-	 */
-	protected function createTemplate($class = NULL)
-	{
-		throw new \Nette\InvalidStateException("Json presenter does not support access to \$template use \$response instead.");
->>>>>>> 95195fa21e6734a5aaa443f2e0ef02e20f86b24e
 	}
 
 	public function sendTemplate()
