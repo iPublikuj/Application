@@ -48,24 +48,18 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 
 	/**
 	 * @param Http\Session $session
-	 */
-	public function injectSession(Http\Session $session)
-	{
-		$this->session = $session;
-	}
-
-	/**
 	 * @param Http\IRequest $httpRequest
 	 */
-	public function injectSession(Http\IRequest $httpRequest)
+	public function injectHttp(Http\Session $session, Http\IRequest $httpRequest)
 	{
-		$this->httpRequest = $httpRequest;
+		$this->session		= $session;
+		$this->httpRequest	= $httpRequest;
 	}
 
 	/**
 	 * @param \Doctrine\ORM\EntityManager $entityManager
 	 */
-	public function injectSession(\Doctrine\ORM\EntityManager $entityManager)
+	public function injectDoctrineEM(\Doctrine\ORM\EntityManager $entityManager)
 	{
 		$this->entityManager = $entityManager;
 	}
