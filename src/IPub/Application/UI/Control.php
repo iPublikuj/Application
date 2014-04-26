@@ -15,27 +15,13 @@
 namespace IPub\Application\UI;
 
 use Nette\Http\Session;
+use Nette\Localization\ITranslator;
 
 use IPub\Application\Observing\IObservable,
 	IPub\Application\Observing\IObserver;
 
 abstract class Control extends \Nette\Application\UI\Control implements IObservable
 {
-	/**
-	 * Implements autowiring
-	 */
-	use \Kdyby\Autowired\AutowireComponentFactories;
-
-	/**
-	 * Implement images extension
-	 */
-	use \IPub\Images\TImagePipe;
-
-	/**
-	 * Implement gravatar extension
-	 */
-	use \IPub\Gravatar\TGravatar;
-
 	/**
 	 * @var array of registered observers
 	 */
@@ -52,9 +38,9 @@ abstract class Control extends \Nette\Application\UI\Control implements IObserva
 	protected $translator;
 
 	/**
-	 * @param \Kdyby\Translation\Translator $translator
+	 * @param ITranslator $translator
 	 */
-	public function injectTranslator(\Kdyby\Translation\Translator $translator)
+	public function injectTranslator(ITranslator $translator)
 	{
 		$this->translator = $translator;
 	}

@@ -16,67 +16,66 @@ namespace IPub\Application\UI;
 
 use Nette;
 use Nette\Application\BadRequestException;
+use Nette\Http;
+use Nette\Localization\ITranslator;
 
 abstract class Presenter extends Nette\Application\UI\Presenter
 {
-	/**
-	 * Implements autowiring extension
-	 */
-	use \Kdyby\Autowired\AutowireProperties;
-	use \Kdyby\Autowired\AutowireComponentFactories;
-
-	/**
-	 * Implement images extension
-	 */
-	use \IPub\Images\TImagePipe;
-
-	/**
-	 * Implement gravatar extension
-	 */
-	use \IPub\Gravatar\TGravatar;
-
-	/**
-	 * @autowire
-	 * @var \Nette\Http\Session
-	 */
-	protected $session;
-
-	/**
-	 * @autowire
-	 * @var \Kdyby\Translation\Translator
-	 */
-	protected $translator;
-
-	/**
-	 * @autowire
-	 * @var \Nette\Http\IRequest
-	 */
-	protected $httpRequest;
-
-	/**
-	 * @autowire
-	 * @var \Doctrine\ORM\EntityManager
-	 */
-	protected $entityManager;
-
 	/**
 	 * @var string|null
 	 */
 	protected $backlink;
 
 	/**
-	 * Add translator to flash messages
-	 *
-	 * @param string $message
-	 * @param string $type
-	 *
-	 * @return string
+	 * @var \Nette\Http\Session
 	 */
-	public function flashMessage($message, $type = "info")
-	{
-		$message = $this->translator->translate($message);
+	protected $session;
 
-		return parent::flashMessage($message, $type);
+	/**
+	 * @var \Kdyby\Translation\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @var \Nette\Http\IRequest
+	 */
+	protected $httpRequest;
+
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	protected $entityManager;
+
+	/**
+	 * @param Http\Session $session
+	 */
+	public function injectSession(Http\Session $session)
+	{
+		$this->session = $session;
+	}
+
+	/**
+	 * @param Http\IRequest $httpRequest
+	 */
+	public function injectSession(Http\IRequest $httpRequest)
+	{
+		$this->httpRequest = $httpRequest;
+	}
+
+	/**
+	 * @param \Doctrine\ORM\EntityManager $entityManager
+	 */
+	public function injectSession(\Doctrine\ORM\EntityManager $entityManager)
+	{
+		$this->entityManager = $entityManager;
+	}
+
+	/**
+	 * @param ITranslator $translator
+	 */
+	public function injectTranslator(ITranslator $translator)
+	{
+		$this->translator = $translator;
 	}
 
 	/**
@@ -100,6 +99,21 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 		$params = $this->context->getParameters();
 
 		return (isset($params[$name])) ? $params[$name] : $default;
+	}
+
+	/**
+	 * Add translator to flash messages
+	 *
+	 * @param string $message
+	 * @param string $type
+	 *
+	 * @return string
+	 */
+	public function flashMessage($message, $type = "info")
+	{
+		$message = $this->translator->translate($message);
+
+		return parent::flashMessage($message, $type);
 	}
 
 	/**
