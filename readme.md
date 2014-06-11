@@ -10,7 +10,13 @@ The best way to install ipub/application is using  [Composer](http://getcomposer
 ```json
 {
 	"require": {
-		"ipub/application": "dev-master"
+		"ipub/application": "dev-nette-2.1"
 	}
 }
+```
+
+or
+
+```sh
+$ composer require ipub/application:@dev-nette-2.1
 ```
