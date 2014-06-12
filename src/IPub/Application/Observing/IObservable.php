@@ -16,16 +16,20 @@ namespace IPub\Application\Observing;
 
 interface IObservable
 {
-	public function addObserver( IObserver $observer );
+	public function addObserver(IObserver $observer);
 
 	public function clearChanged();
 
 	public function setChanged();
 
-	/** @return bool */
+	/**
+	 * @return bool
+	 */
 	public function hasChanged();
 
-	/** @return int */
+	/**
+	 * @return int
+	 */
 	public function countObservers();
 
 	public function deleteObservers();

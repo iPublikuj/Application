@@ -16,8 +16,7 @@ namespace IPub\Application\Responses;
 
 use Nette;
 use Nette\Http;
-use Nette\InvalidStateException;
-use Nette\Utils\Json;
+use Nette\Utils;
 
 class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 {
@@ -66,14 +65,14 @@ class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 	 * @param string
 	 * @param mixed
 	 *
-	 * @return JsonResponse
+	 * @return Utils\JsonResponse
 	 *
-	 * @throws InvalidStateException
+	 * @throws Nette\InvalidStateException
 	 */
 	public function add($name, $value)
 	{
 		if (array_key_exists($name, $this->payload)) {
-			throw new InvalidStateException("A variable '$name' already exists.'");
+			throw new Nette\InvalidStateException("A variable '$name' already exists.'");
 		}
 
 		return $this->set($name, $value);
@@ -111,12 +110,12 @@ class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 	 *
 	 * @return mixed
 	 *
-	 * @throws InvalidStateException
+	 * @throws Nette\InvalidStateException
 	 */
 	public function &__get($name)
 	{
 		if (!array_key_exists($name, $this->payload)) {
-			throw new InvalidStateException("The variable '$name' does not exist.'");
+			throw new Nette\InvalidStateException("The variable '$name' does not exist.'");
 		}
 
 		return $this->payload[$name];
@@ -155,6 +154,6 @@ class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 			$this->payload = $this->payload[$keys[0]];
 		}
 
-		echo Json::encode($this->payload);
+		echo Utils\Json::encode($this->payload);
 	}
 }

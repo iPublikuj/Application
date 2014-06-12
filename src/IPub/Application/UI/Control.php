@@ -14,13 +14,13 @@
 
 namespace IPub\Application\UI;
 
-use Nette\Http\Session;
-use Nette\Localization\ITranslator;
+use Nette;
+use Nette\Localization;
 
 use IPub\Application\Observing\IObservable,
 	IPub\Application\Observing\IObserver;
 
-abstract class Control extends \Nette\Application\UI\Control implements IObservable
+abstract class Control extends Nette\Application\UI\Control implements IObservable
 {
 	/**
 	 * @var array of registered observers
@@ -38,9 +38,9 @@ abstract class Control extends \Nette\Application\UI\Control implements IObserva
 	protected $translator;
 
 	/**
-	 * @param ITranslator $translator
+	 * @param Localization\ITranslator $translator
 	 */
-	public function injectTranslator(ITranslator $translator)
+	public function injectTranslator(Localization\ITranslator $translator)
 	{
 		$this->translator = $translator;
 	}

@@ -1,11 +1,10 @@
 {
-	"name"				: "ipub/application",
-	"type"				: "library",
-	"description"		: "Add default extensions to nette application",
-	"keywords"			: ["nette", "application"],
-	"homepage"			: "https://github.com/iPublikuj/application.git",
-	"license"			: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
-	"minimum-stability"	: "dev",
+	"name"			: "ipub/application",
+	"type"			: "library",
+	"description"	: "Add default extensions to nette application",
+	"keywords"		: ["nette", "application"],
+	"homepage"		: "https://github.com/iPublikuj/application.git",
+	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 
 	"authors": [
 		{
@@ -21,7 +20,10 @@
 
 	"require": {
 		"php"				: ">=5.3.2",
-		"nette/nette"		: "2.2@dev",
+		"nette/application"	: "~2.2",
+		"nette/http"		: "~2.2",
+		"nette/utils"		: "~2.2",
+		"tracy/tracy"		: "~2.2",
 		"kdyby/autowired"	: "@dev"
 	},
 

@@ -14,7 +14,10 @@
 
 namespace IPub\Application\UI;
 
-use IPub\Utils\Strings;
+use Nette;
+use Nette\Utils;
+
+use Tracy\Debugger;
 
 abstract class RestPresenter extends JsonPresenter
 {
@@ -32,7 +35,7 @@ abstract class RestPresenter extends JsonPresenter
 		try {
 			$this->checkMethodRequest();
 
-		} catch (\Nette\InvalidStateException $ex) {
+		} catch (Nette\InvalidStateException $ex) {
 			$this->returnException($ex);
 		}
 	}
@@ -44,9 +47,11 @@ abstract class RestPresenter extends JsonPresenter
 	 */
 	protected function returnException(\Exception $ex)
 	{
-		\Nette\Diagnostics\Debugger::log($ex);
-		$this->response->status = 'error';
-		$this->response->message = $ex->getMessage();
+		Debugger::log($ex);
+
+		$this->response->status		= 'error';
+		$this->response->message	= $ex->getMessage();
+
 		$this->sendResponse($this->getResponse());
 	}
 
@@ -56,23 +61,21 @@ abstract class RestPresenter extends JsonPresenter
 	 */
 	protected function returnResponse($data = array())
 	{
-		$this->response->status = 'success';
-		$this->response->data = $data;
+		$this->response->status	= 'success';
+		$this->response->data	= $data;
 	}
 
 	protected function checkMethodRequest()
 	{
-		$methodName = 'action' . Strings::firstUpper($this->action);
+		$methodName = 'action' . Utils\Strings::firstUpper($this->action);
 		$rc = $this->getReflection();
-		if($rc->hasMethod($methodName) &&
-			$method = $rc->getMethod($methodName)){
 
-			if($method->hasAnnotation('method') &&
-				$anot = $method->getAnnotation('method')){
-
+		if ($rc->hasMethod($methodName) && $method = $rc->getMethod($methodName)) {
+			if ($method->hasAnnotation('method') && $anot = $method->getAnnotation('method')) {
 				$reguest = $this->getHttpRequest();
-				if(Strings::lower($anot) !== Strings::lower($reguest->getMethod())){
-					throw new \Nette\InvalidStateException('Bad method for this request. ' . __CLASS__ . '::' . $methodName);
+
+				if (Utils\Strings::lower($anot) !== Utils\Strings::lower($reguest->getMethod())) {
+					throw new Nette\InvalidStateException('Bad method for this request. ' . __CLASS__ . '::' . $methodName);
 				}
 			}
 		}

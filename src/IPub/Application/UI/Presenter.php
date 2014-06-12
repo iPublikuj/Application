@@ -15,11 +15,11 @@
 namespace IPub\Application\UI;
 
 use Nette;
-use Nette\Application\BadRequestException;
+use Nette\Application;
 use Nette\Http;
-use Nette\Localization\ITranslator;
+use Nette\Localization;
 
-abstract class Presenter extends Nette\Application\UI\Presenter
+abstract class Presenter extends Application\UI\Presenter
 {
 	/**
 	 * @var string|null
@@ -27,17 +27,17 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 	protected $backlink;
 
 	/**
-	 * @var \Nette\Http\Session
+	 * @var Http\Session
 	 */
 	protected $session;
 
 	/**
-	 * @var \Kdyby\Translation\Translator
+	 * @var Localization\ITranslator
 	 */
 	protected $translator;
 
 	/**
-	 * @var \Nette\Http\IRequest
+	 * @var Http\IRequest
 	 */
 	protected $httpRequest;
 
@@ -65,9 +65,9 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 	}
 
 	/**
-	 * @param ITranslator $translator
+	 * @param Localization\ITranslator $translator
 	 */
-	public function injectTranslator(ITranslator $translator)
+	public function injectTranslator(Localization\ITranslator $translator)
 	{
 		$this->translator = $translator;
 	}
@@ -126,7 +126,7 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 	 *
 	 * @return bool does method exist?
 	 *
-	 * @throws BadRequestException
+	 * @throws Application\BadRequestException
 	 */
 	protected function tryCall($method, array $params)
 	{
@@ -161,12 +161,12 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 									$args[$i] = $entity;
 
 								} else {
-									throw new BadRequestException("Value '$paramValue' not found in collection '$className'.");
+									throw new Application\BadRequestException("Value '$paramValue' not found in collection '$className'.");
 								}
 
 							} else {
 								if (!$param->allowsNull()) {
-									throw new BadRequestException("Value '$param' cannot be NULL.");
+									throw new Application\BadRequestException("Value '$param' cannot be NULL.");
 								}
 							}
 						}
