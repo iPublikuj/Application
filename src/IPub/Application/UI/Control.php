@@ -15,6 +15,7 @@
 namespace IPub\Application\UI;
 
 use Nette;
+use Nette\Http;
 use Nette\Localization;
 
 use IPub\Application\Observing\IObservable,
@@ -33,9 +34,19 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	protected $changed = FALSE;
 
 	/**
-	 * @var \Kdyby\Translation\Translator
+	 * @var Localization\ITranslator
 	 */
 	protected $translator;
+
+	/**
+	 * @var Http\IRequest
+	 */
+	protected $httpRequest;
+
+	/**
+	 * @var Http\Session
+	 */
+	protected $session;
 
 	/**
 	 * @param Localization\ITranslator $translator
@@ -46,13 +57,84 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	}
 
 	/**
-	 * Get app translator service
+	 * @param Http\Session $session
+	 * @param Http\IRequest $httpRequest
+	 */
+	public function injectHttp(Http\Session $session, Http\IRequest $httpRequest)
+	{
+		$this->session		= $session;
+		$this->httpRequest	= $httpRequest;
+	}
+
+	/**
+	 * Set control translator service
 	 *
-	 * @return type
+	 * @param Localization\ITranslator $translator
+	 *
+	 * @return $this
+	 */
+	public function setTranslator(Localization\ITranslator $translator)
+	{
+		$this->translator = $translator;
+
+		return $this;
+	}
+
+	/**
+	 * Get control translator service
+	 *
+	 * @return Localization\ITranslator
 	 */
 	public function getTranslator()
 	{
 		return $this->translator;
+	}
+
+	/**
+	 * Redirect only if not ajax
+	 *
+	 * @param string $destination
+	 * @param array $args
+	 * @param array $snippets
+	 */
+	final public function go($destination, $args = [], $snippets = [])
+	{
+		if ($this->getPresenter()->isAjax()) {
+			if ($destination === 'this') {
+				foreach($snippets as $snippet) {
+					$this->redrawControl($snippet);
+				}
+
+			} else {
+				$this->forward($destination, $args);
+			}
+
+		} else {
+			$this->redirect($destination, $args);
+		}
+	}
+
+	/**
+	 * Forward request to another
+	 *
+	 * @param string $destination
+	 * @param array $args
+	 */
+	public function forward($destination, $args = [])
+	{
+		$name = $this->getUniqueId();
+
+		if ($destination != 'this') {
+			$destination = "$name-$destination";
+		}
+
+		$params = array();
+
+		foreach($args as $key => $val) {
+			$params["$name-$key"] = $val;
+		}
+
+		$this->getPresenter()->forward($destination, $params);
 	}
 
 	/**

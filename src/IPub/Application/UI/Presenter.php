@@ -83,6 +83,30 @@ abstract class Presenter extends Application\UI\Presenter
 	}
 
 	/**
+	 * Redirect only if not ajax
+	 *
+	 * @param string $destination
+	 * @param array $args
+	 * @param array $snippets
+	 */
+	final public function go($destination, $args = [], $snippets = [])
+	{
+		if ($this->isAjax()) {
+			if ($destination === 'this') {
+				foreach($snippets as $snippet) {
+					$this->redrawControl($snippet);
+				}
+
+			} else {
+				$this->forward($destination, $args);
+			}
+
+		} else {
+			$this->redirect($destination, $args);
+		}
+	}
+
+	/**
 	 * @param string $name
 	 * @param null $default
 	 *
