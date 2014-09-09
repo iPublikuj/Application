@@ -15,7 +15,7 @@
 namespace IPub\Application\UI;
 
 use Nette;
-use Nette\Http;
+use Nette\ComponentModel;
 use Nette\Localization;
 
 use IPub\Application\Observing\IObservable,
@@ -23,6 +23,12 @@ use IPub\Application\Observing\IObservable,
 
 abstract class Control extends Nette\Application\UI\Control implements IObservable
 {
+	/**
+	 * Define available control types
+	 */
+	const CONTROL_TYPE_COMPONENT	= 'component';
+	const CONTROL_TYPE_FORM			= 'form';
+
 	/**
 	 * @var array of registered observers
 	 */
@@ -39,14 +45,14 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	protected $translator;
 
 	/**
-	 * @var Http\IRequest
+	 * @var string
 	 */
-	protected $httpRequest;
+	protected $controlType = self::CONTROL_TYPE_COMPONENT;
 
 	/**
-	 * @var Http\Session
+	 * @var string
 	 */
-	protected $session;
+	protected $controlName;
 
 	/**
 	 * @param Localization\ITranslator $translator
@@ -57,13 +63,22 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	}
 
 	/**
-	 * @param Http\Session $session
-	 * @param Http\IRequest $httpRequest
+	 * @param ComponentModel\IContainer $parent
+	 * @param string $name
 	 */
-	public function injectHttp(Http\Session $session, Http\IRequest $httpRequest)
-	{
-		$this->session		= $session;
-		$this->httpRequest	= $httpRequest;
+	public function __construct(
+		ComponentModel\IContainer $parent = NULL, $name = NULL
+	) {
+		parent::__construct($parent, $name);
+
+		// Get component namespace
+		$namespace = $this->getReflection()->getNamespaceName();
+		// Explode it to all parts
+		$parts = explode('\\', $namespace);
+
+		// Get control name and group (components or forms)
+		$this->controlName = array_pop($parts);
+		$this->controlType = strtolower(array_pop($parts)) == 'forms' ? self::CONTROL_TYPE_FORM : self::CONTROL_TYPE_COMPONENT;
 	}
 
 	/**
@@ -88,6 +103,46 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	public function getTranslator()
 	{
 		return $this->translator;
+	}
+
+	/**
+	 * Set control type flag
+	 *
+	 * @param string $type
+	 *
+	 * @return $this
+	 *
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function setControlType($type)
+	{
+		if (!in_array($type, array(self::CONTROL_TYPE_FORM, self::CONTROL_TYPE_COMPONENT))) {
+			throw new Nette\InvalidArgumentException('Invalid control type given');
+		}
+
+		$this->controlType = $type;
+
+		return $this;
+	}
+
+	/**
+	 * Get control type
+	 *
+	 * @return string
+	 */
+	public function getControlType()
+	{
+		return (string) $this->controlType;
+	}
+
+	/**
+	 * Get info if control is form type
+	 *
+	 * @return bool
+	 */
+	public function isControlForm()
+	{
+		return $this->controlType === self::CONTROL_TYPE_FORM;
 	}
 
 	/**
@@ -202,5 +257,17 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 			/* @var $observer IObserver */
 			$observer->update($this, $args);
 		}
+	}
+
+	/**
+	 * Convert component name to string representation
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		$class = explode('\\', get_class($this));
+
+		return end($class);
 	}
 }

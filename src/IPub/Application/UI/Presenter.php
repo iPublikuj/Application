@@ -75,7 +75,7 @@ abstract class Presenter extends Application\UI\Presenter
 	/**
 	 * Get app translator service
 	 *
-	 * @return type
+	 * @return Localization\ITranslator
 	 */
 	public function getTranslator()
 	{
@@ -163,12 +163,12 @@ abstract class Presenter extends Application\UI\Presenter
 				$this->checkRequirements($rm);
 				$args = $rc->combineArgs($rm, $params);
 
-				if (\Nette\Utils\Strings::match($method, "~^(action|render|handle).+~")) {
+				if (Nette\Utils\Strings::match($method, "~^(action|render|handle).+~")) {
 					$methodParams = $rm->getParameters();
 
 					foreach ($methodParams as $i => $param) {
 						/**
-						 * @var \Nette\Reflection\Parameter $param
+						 * @var Nette\Reflection\Parameter $param
 						 */
 						if ($className = $param->getClassName()) {
 							$paramName = $param->getName();
