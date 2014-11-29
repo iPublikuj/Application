@@ -15,44 +15,15 @@
 namespace IPub\Application\UI;
 
 use Nette;
-use Nette\ComponentModel;
+use Nette\Application;
 use Nette\Localization;
 
-use IPub\Application\Observing\IObservable,
-	IPub\Application\Observing\IObserver;
-
-abstract class Control extends Nette\Application\UI\Control implements IObservable
+abstract class Control extends Application\UI\Control
 {
-	/**
-	 * Define available control types
-	 */
-	const CONTROL_TYPE_COMPONENT	= 'component';
-	const CONTROL_TYPE_FORM			= 'form';
-
-	/**
-	 * @var array of registered observers
-	 */
-	protected $observers = array();
-
-	/**
-	 * @var bool if is set TRUE, than object is changed
-	 */
-	protected $changed = FALSE;
-
 	/**
 	 * @var Localization\ITranslator
 	 */
 	protected $translator;
-
-	/**
-	 * @var string
-	 */
-	protected $controlType = self::CONTROL_TYPE_COMPONENT;
-
-	/**
-	 * @var string
-	 */
-	protected $controlName;
 
 	/**
 	 * @param Localization\ITranslator $translator
@@ -60,25 +31,6 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	public function injectTranslator(Localization\ITranslator $translator)
 	{
 		$this->translator = $translator;
-	}
-
-	/**
-	 * @param ComponentModel\IContainer $parent
-	 * @param string $name
-	 */
-	public function __construct(
-		ComponentModel\IContainer $parent = NULL, $name = NULL
-	) {
-		parent::__construct($parent, $name);
-
-		// Get component namespace
-		$namespace = $this->getReflection()->getNamespaceName();
-		// Explode it to all parts
-		$parts = explode('\\', $namespace);
-
-		// Get control name and group (components or forms)
-		$this->controlName = array_pop($parts);
-		$this->controlType = strtolower(array_pop($parts)) == 'forms' ? self::CONTROL_TYPE_FORM : self::CONTROL_TYPE_COMPONENT;
 	}
 
 	/**
@@ -103,46 +55,6 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 	public function getTranslator()
 	{
 		return $this->translator;
-	}
-
-	/**
-	 * Set control type flag
-	 *
-	 * @param string $type
-	 *
-	 * @return $this
-	 *
-	 * @throws \Nette\InvalidArgumentException
-	 */
-	public function setControlType($type)
-	{
-		if (!in_array($type, array(self::CONTROL_TYPE_FORM, self::CONTROL_TYPE_COMPONENT))) {
-			throw new Nette\InvalidArgumentException('Invalid control type given');
-		}
-
-		$this->controlType = $type;
-
-		return $this;
-	}
-
-	/**
-	 * Get control type
-	 *
-	 * @return string
-	 */
-	public function getControlType()
-	{
-		return (string) $this->controlType;
-	}
-
-	/**
-	 * Get info if control is form type
-	 *
-	 * @return bool
-	 */
-	public function isControlForm()
-	{
-		return $this->controlType === self::CONTROL_TYPE_FORM;
 	}
 
 	/**
@@ -202,61 +114,12 @@ abstract class Control extends Nette\Application\UI\Control implements IObservab
 		return (bool) $this->getPresenter()->getParameter('productionMode', FALSE);
 	}
 
-	public function addObserver(IObserver $observer)
+	/**
+	 * Render component
+	 */
+	public function render()
 	{
-		if ($this->hasObserver($observer)) {
-			return;
-		}
-
-		$this->observers[] = $observer;
-	}
-
-	protected function hasObserver(IObserver $observer)
-	{
-		foreach ($this->observers as $o) {
-			if ($o === $observer) {
-				return TRUE;
-			}
-		}
-
-		return FALSE;
-	}
-
-	public function countObservers()
-	{
-		return count($this->observers);
-	}
-
-	public function deleteObservers()
-	{
-		$this->observers = array();
-	}
-
-	public function hasChanged()
-	{
-		return $this->changed;
-	}
-
-	public function setChanged()
-	{
-		$this->changed = TRUE;
-	}
-
-	public function clearChanged()
-	{
-		$this->changed = FALSE;
-	}
-
-	public function notifyObservers($args = NULL)
-	{
-		if (!$this->hasChanged()) {
-			return;
-		}
-
-		foreach ($this->observers as $observer) {
-			/* @var $observer IObserver */
-			$observer->update($this, $args);
-		}
+		$this->template->render();
 	}
 
 	/**
