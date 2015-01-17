@@ -129,7 +129,22 @@ abstract class Presenter extends Application\UI\Presenter
 	 */
 	public function flashMessage($message, $type = "info")
 	{
-		$message = $this->translator->translate($message);
+		if (is_array($message)) {
+			if (isset($message['message'])) {
+				// Parse values from array
+				$count		= isset($message['count']) ? $message['count'] : NULL;
+				$parameters	= isset($message['parameters']) ? $message['parameters'] : [];
+				$message	= $message['message'];
+
+				$message = $this->translator->translate($message, $count, $parameters);
+
+			} else {
+				return FALSE;
+			}
+
+		} else {
+			$message = $this->translator->translate($message);
+		}
 
 		return parent::flashMessage($message, $type);
 	}
@@ -152,7 +167,7 @@ abstract class Presenter extends Application\UI\Presenter
 	 *
 	 * @throws Application\BadRequestException
 	 */
-	protected function tryCall($method, array $params)
+	public function tryCall($method, array $params)
 	{
 		$rc = $this->getReflection();
 
