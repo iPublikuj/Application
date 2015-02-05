@@ -1,6 +1,6 @@
 <?php
 /**
- * JsonPresenter.php
+ * TJsonPresenter.php
  *
  * @copyright	More in license.md
  * @license		http://www.ipublikuj.eu
@@ -16,9 +16,17 @@ namespace IPub\Application\UI;
 
 use Nette;
 
-use IPub\Application\Responses;
+use IPub\Application;
 
-abstract class JsonPresenter extends Presenter
+/**
+ * JSON presenter trait
+ *
+ * @package		iPublikuj:Application!
+ * @subpackage	UI
+ *
+ * @method sendResponse(Nette\Application\IResponse $response)
+ */
+trait TJsonPresenter
 {
 	/**
 	 * @var bool
@@ -26,20 +34,20 @@ abstract class JsonPresenter extends Presenter
 	protected $compileVariables = FALSE;
 
 	/**
-	 * @var Responses\JSONResponse
+	 * @var Application\Responses\JsonResponse
 	 */
 	protected $response;
 
 	/**
-	 * @return Responses\JSONResponse
+	 * @return Application\Responses\JsonResponse
 	 */
 	protected function createResponse()
 	{
-		return new Responses\JSONResponse($this->compileVariables);
+		return new Application\Responses\JsonResponse($this->compileVariables);
 	}
 
 	/**
-	 * @return Responses\JSONResponse
+	 * @return Application\Responses\JsonResponse
 	 */
 	public function getResponse()
 	{
@@ -59,9 +67,16 @@ abstract class JsonPresenter extends Presenter
 	 */
 	protected function createTemplate($class = NULL)
 	{
-		throw new Nette\InvalidStateException("Json presenter does not support access to \$template use \$response instead.");
+		throw new Nette\InvalidStateException("JSON presenter does not support access to \$template use \$response instead.");
 	}
 
+	/**
+	 * Sends response and terminates presenter
+	 *
+	 * @return void
+	 *
+	 * @throws Nette\Application\AbortException
+	 */
 	public function sendTemplate()
 	{
 		$this->sendResponse($this->getResponse());

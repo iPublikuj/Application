@@ -1,6 +1,6 @@
 <?php
 /**
- * JSONResponse.php
+ * JsonResponse.php
  *
  * @copyright	Vice v copyright.php
  * @license		http://www.ipublikuj.eu
@@ -15,10 +15,11 @@
 namespace IPub\Application\Responses;
 
 use Nette;
+use Nette\Application;
 use Nette\Http;
 use Nette\Utils;
 
-class JSONResponse extends Nette\Object implements Nette\Application\IResponse
+class JsonResponse extends Nette\Object implements Application\IResponse
 {
 	/**
 	 * @var string
@@ -28,7 +29,7 @@ class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 	/**
 	 * @var array
 	 */
-	protected $payload = array();
+	protected $payload = [];
 
 	/**
 	 * @var bool
@@ -65,7 +66,7 @@ class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 	 * @param string
 	 * @param mixed
 	 *
-	 * @return Utils\JsonResponse
+	 * @return $this
 	 *
 	 * @throws Nette\InvalidStateException
 	 */
@@ -82,11 +83,11 @@ class JSONResponse extends Nette\Object implements Nette\Application\IResponse
 	 * @param $name
 	 * @param $value
 	 *
-	 * @return Response
+	 * @return $this
 	 */
 	public function set($name, $value)
 	{
-		if ($value instanceof \DateTime) {
+		if ($value instanceof \DateTime || $value instanceof Utils\DateTime) {
 			$value = $value->getTimestamp();
 		}
 
