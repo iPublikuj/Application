@@ -1,8 +1,8 @@
 {
 	"name"			: "ipub/application",
 	"type"			: "library",
-	"description"	: "Add default extensions to nette application",
-	"keywords"		: ["nette", "application"],
+	"description"	: "Add useful traits for presenters and components under nette framework",
+	"keywords"		: ["nette", "application", "ipub", "ipublikuj", "traits", "doctrine"],
 	"homepage"		: "https://github.com/iPublikuj/application.git",
 	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 
