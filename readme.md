@@ -3,7 +3,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/ipub/application.svg?style=flat-square)](https://packagist.org/packages/ipub/application)
 [![Composer Downloads](https://img.shields.io/packagist/dt/ipub/application.svg?style=flat-square)](https://packagist.org/packages/ipub/application)
 
-Sets of useful traits for presenters and controls under [Nette Framework](http://nette.org/)
+Useful traits for presenters & components for [Nette Framework](http://nette.org/)
 
 ## Installation
 

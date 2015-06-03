@@ -32,14 +32,14 @@ trait TEntityCall
 	/**
 	 * @var \Doctrine\ORM\EntityManager
 	 */
-	protected $entityManager;
+	protected $callEntityManager;
 
 	/**
-	 * @param \Doctrine\ORM\EntityManager $entityManager
+	 * @param \Doctrine\ORM\EntityManager $callEntityManager
 	 */
-	public function injectEntityManager(\Doctrine\ORM\EntityManager $entityManager)
+	public function injectCallEntityManager(\Doctrine\ORM\EntityManager $callEntityManager)
 	{
-		$this->entityManager = $entityManager;
+		$this->callEntityManager = $callEntityManager;
 	}
 
 	/**
@@ -78,7 +78,7 @@ trait TEntityCall
 									$entity = $paramValue;
 
 								} else {
-									$entity = $this->findById($className, $paramValue);
+									$entity = $this->findCallEntityById($className, $paramValue);
 								}
 
 								if ($entity) {
@@ -114,8 +114,8 @@ trait TEntityCall
 	 *
 	 * @return object|null
 	 */
-	protected function findById($entityName, $id)
+	protected function findCallEntityById($entityName, $id)
 	{
-		return $this->entityManager->find($entityName, $id);
+		return $this->callEntityManager->find($entityName, $id);
 	}
 }

@@ -1,14 +1,15 @@
 {
 	"name"			: "ipub/application",
 	"type"			: "library",
-	"description"	: "Add useful traits for presenters and components under nette framework",
-	"keywords"		: ["nette", "application", "ipub", "ipublikuj", "traits", "doctrine"],
-	"homepage"		: "https://github.com/iPublikuj/application.git",
+	"description"	: "Useful traits for presenters & components for Nette Framework",
+	"keywords"		: ["nette", "application", "ipub", "ipublikuj", "doctrine"],
+	"homepage"		: "https://github.com/iPublikuj/application",
 	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 
 	"authors": [
 		{
-			"name"		: "Adam Kadlec",
+			"name"		: "iPublikuj:cms",
+			"email"		: "info@ipublikuj.eu",
 			"homepage"	: "http://www.ipublikuj.eu/"
 		}
 	],
