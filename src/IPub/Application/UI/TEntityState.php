@@ -17,6 +17,7 @@ namespace IPub\Application\UI;
 use Nette;
 use Nette\Application;
 use Nette\Application\UI;
+use Tracy\Debugger;
 
 /**
  * Entity call implementation into presenters and controls
@@ -24,7 +25,7 @@ use Nette\Application\UI;
  * @package		iPublikuj:Application!
  * @subpackage	UI
  *
- * @method UI\PresenterComponentReflection getReflection()
+ * @method UI\ComponentReflection getReflection()
  */
 trait TEntityState
 {
@@ -64,6 +65,7 @@ trait TEntityState
 
 				$this->$name = $params[$name];
 
+				/*
 				if ($className = $reflection->getProperty($name)->getAnnotation('var')) {
 					if ($paramValue = $params[$name]) {
 						if ($paramValue instanceof $className) {
@@ -81,6 +83,7 @@ trait TEntityState
 						}
 					}
 				}
+				*/
 
 			} else {
 				$params[$name] = $this->$name;
@@ -114,11 +117,13 @@ trait TEntityState
 			} elseif (!isset($meta['since']) || $this instanceof $meta['since']) {
 				$params[$name] = $this->$name; // object property value
 
+				/*
 				if ($className = $reflection->getProperty($name)->getAnnotation('var')) {
 					if ($this->$name instanceof $className) {
-						$params[$name] = $this->$name->id;
+						$params[$name] = (string) $this->$name;
 					}
 				}
+				*/
 
 			} else {
 				continue; // ignored parameter

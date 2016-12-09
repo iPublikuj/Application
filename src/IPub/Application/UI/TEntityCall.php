@@ -24,7 +24,7 @@ use Nette\Application\UI;
  * @package		iPublikuj:Application!
  * @subpackage	UI
  *
- * @method UI\PresenterComponentReflection getReflection()
+ * @method UI\ComponentReflection getReflection()
  * @method void checkRequirements(Nette\Reflection\Method $element)
  */
 trait TEntityCall
@@ -70,7 +70,8 @@ trait TEntityCall
 						/**
 						 * @var Nette\Reflection\Parameter $param
 						 */
-						if ($className = $param->getClassName()) {
+						if ($class = $param->getClass()) {
+							$className = $class->getName();
 							$paramName = $param->getName();
 
 							if ($paramValue = $args[$i]) {
@@ -110,7 +111,7 @@ trait TEntityCall
 	 * Find entity by ID
 	 *
 	 * @param string $entityName
-	 * @param int $id
+	 * @param mixed $id
 	 *
 	 * @return object|null
 	 */
