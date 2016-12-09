@@ -4,7 +4,7 @@
 	"description"	: "Useful traits for presenters & components for Nette Framework",
 	"keywords"		: ["nette", "application", "ipub", "ipublikuj", "doctrine"],
 	"homepage"		: "https://github.com/iPublikuj/application",
-	"license"		: ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"license"		: ["GPL-2.0", "GPL-3.0"],
 
 	"authors": [
 		{
@@ -20,17 +20,15 @@
 	},
 
 	"require": {
-		"php"				: ">=5.3.2",
-		"nette/application"	: "~2.2",
-		"nette/http"		: "~2.2",
-		"nette/utils"		: "~2.2",
-		"tracy/tracy"		: "~2.2",
-		"kdyby/autowired"	: "@dev"
+		"php"	: ">=7.0.0",
+
+		"nette/application"	: "~2.2"
 	},
 
 	"require-dev": {
-		"nette/tester"		: "@dev",
-		"janmarek/mockista"	: "@dev"
+		"nette/tester"	: "@dev",
+
+		"tracy/tracy"	: "@dev"
 	},
 
 	"autoload": {

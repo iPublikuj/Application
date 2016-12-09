@@ -2,21 +2,29 @@
 /**
  * TTranslator.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Application!
- * @subpackage	UI
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Application!
+ * @subpackage     UI
+ * @since          1.0.0
  *
- * @date		05.02.15
+ * @date           05.02.15
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Application\UI;
 
 use Nette;
 use Nette\Localization;
 
+/**
+ * Inject translator interface into presenters and components
+ *
+ * @package        iPublikuj:Application!
+ * @subpackage     UI
+ */
 trait TTranslator
 {
 	/**
@@ -36,20 +44,16 @@ trait TTranslator
 	 * Set translator service
 	 *
 	 * @param Localization\ITranslator $translator
-	 *
-	 * @return $this
 	 */
 	public function setTranslator(Localization\ITranslator $translator)
 	{
 		$this->translator = $translator;
-
-		return $this;
 	}
 
 	/**
 	 * Get app translator service
 	 *
-	 * @return Localization\ITranslator
+	 * @return Localization\ITranslator|NULL
 	 */
 	public function getTranslator()
 	{

@@ -2,15 +2,17 @@
 /**
  * TRedirect.php
  *
- * @copyright	More in license.md
- * @license		http://www.ipublikuj.eu
- * @author		Adam Kadlec http://www.ipublikuj.eu
- * @package		iPublikuj:Application!
- * @subpackage	UI
- * @since		5.0
+ * @copyright      More in license.md
+ * @license        http://www.ipublikuj.eu
+ * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @package        iPublikuj:Application!
+ * @subpackage     UI
+ * @since          1.0.0
  *
- * @date		05.02.15
+ * @date           05.02.15
  */
+
+declare(strict_types = 1);
 
 namespace IPub\Application\UI;
 
@@ -21,8 +23,8 @@ use Nette\Application\Responses;
 /**
  * Add improved redirects & forwarding into presenters & components
  *
- * @package		iPublikuj:Application!
- * @subpackage	UI
+ * @package        iPublikuj:Application!
+ * @subpackage     UI
  *
  * @method Application\UI\Presenter getPresenter()
  * @method string getUniqueId()
@@ -38,7 +40,7 @@ trait TRedirect
 	 *
 	 * @return void
 	 *
-	 * @throws Nette\Application\AbortException
+	 * @throws Application\AbortException
 	 */
 	final public function go($destination, $args = [], $snippets = [])
 	{
@@ -47,7 +49,7 @@ trait TRedirect
 
 		if ($presenter->isAjax()) {
 			if ($destination === 'this') {
-				foreach($snippets as $snippet) {
+				foreach ($snippets as $snippet) {
 					$this->redrawControl($snippet);
 				}
 
@@ -97,7 +99,7 @@ trait TRedirect
 	/**
 	 * @return bool
 	 */
-	protected function isPresenter()
+	protected function isPresenter() : bool
 	{
 		if ($this instanceof Application\UI\Presenter) {
 			return TRUE;

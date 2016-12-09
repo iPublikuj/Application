@@ -12,39 +12,6 @@ $ composer require ipub/application
 
 ## Usage
 
-### Application\UI\TEntityCall & Application\UI\TEntityState
-
-If you are using Doctrine in your app, you can easily convert variables which are used as parameters in handleX, actionX and renderX methods and also persistent parameters, so you don't need to call your model to load this entities.
-
-```php
-<?php
-
-class SomePresenter extends Nette\Application\UI\Presenter
-{
-	use IPub\Application\UI\TEntityCall;
-	use IPub\Application\UI\TEntityState;
-
-	/**
-	 * @persistent
-	 * @var \Your\App\Namespace\Entities\Some\Entity
-	 */
-	public $variable;
-
-	/**
-	 * @param Your\App\Namespace\Entities\Users\User $user
-	 */
-	public function actionEdit(Your\App\Namespace\Entities\Users\User $user)
-	{
-		$user->getName();
-		....
-		$this->variable->setUser($user)
-		....
-	}
-}
-```
-
-All what you have to do is include this *traits* into your presenter or control and write proper data type. This trait try to find out your entity and load it from database.
-
 ### Application\UI\TRedirect
 
 Are you using AJAX in your application? This trait will help you write less code. Now you don't have to create conditions for AJAX and nonAJAX requests.
