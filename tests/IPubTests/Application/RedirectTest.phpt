@@ -32,6 +32,14 @@ require __DIR__ . DS . 'libs' . DS . 'Translator.php';
 require __DIR__ . DS . 'libs' . DS . 'SecondTranslator.php';
 require __DIR__ . DS . 'libs' . DS . 'RouterFactory.php';
 
+/**
+ * Redirect trait tests
+ *
+ * @package        iPublikuj:Application!
+ * @subpackage     Tests
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
+ */
 class RedirectTest extends Tester\TestCase
 {
 	/**
@@ -134,7 +142,15 @@ class RedirectTest extends Tester\TestCase
 		$config->setTempDirectory(TEMP_DIR);
 
 		$config->addConfig(__DIR__ . DS . 'files' . DS . 'config.neon');
-		$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters.neon');
+
+		$version = getenv('NETTE');
+
+		if (!$version || $version == 'default') {
+			$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters.neon');
+
+		} else {
+			$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters_2.3.neon');
+		}
 
 		return $config->createContainer();
 	}

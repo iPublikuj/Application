@@ -26,6 +26,8 @@ use Nette\Application\Routers;
  *
  * @package        iPublikuj:Application!
  * @subpackage     Tests
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class RouterFactory
 {

@@ -33,6 +33,14 @@ require __DIR__ . DS . 'libs' . DS . 'Translator.php';
 require __DIR__ . DS . 'libs' . DS . 'SecondTranslator.php';
 require __DIR__ . DS . 'libs' . DS . 'RouterFactory.php';
 
+/**
+ * Translation trait tests
+ *
+ * @package        iPublikuj:Application!
+ * @subpackage     Tests
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
+ */
 class TranslatorTest extends Tester\TestCase
 {
 	/**

@@ -25,6 +25,8 @@ use Nette\Localization;
  *
  * @package        iPublikuj:Application!
  * @subpackage     Tests
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 class SecondTranslator extends Nette\Object implements Localization\ITranslator
 {

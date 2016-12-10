@@ -24,6 +24,8 @@ use Nette\Localization;
  *
  * @package        iPublikuj:Application!
  * @subpackage     UI
+ *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
 trait TTranslator
 {

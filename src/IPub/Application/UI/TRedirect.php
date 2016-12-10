@@ -26,6 +26,8 @@ use Nette\Application\Responses;
  * @package        iPublikuj:Application!
  * @subpackage     UI
  *
+ * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
+ *
  * @method Application\UI\Presenter getPresenter()
  * @method string getUniqueId()
  * @method redrawControl($snippet = NULL, $redraw = TRUE)
