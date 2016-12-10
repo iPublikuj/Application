@@ -1,0 +1,3 @@
+services:
+	translator:
+		class: IPubTests\Application\Libs\Translator

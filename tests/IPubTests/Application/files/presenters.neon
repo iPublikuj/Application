@@ -1,0 +1,8 @@
+application:
+	mapping:
+		*: IPubTests\Application\*Presenter
+
+services:
+	# Test presenter
+	presenters.test:
+		class: IPubTests\Application\TestPresenter
