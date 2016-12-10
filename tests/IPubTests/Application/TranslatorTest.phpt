@@ -29,6 +29,7 @@ use IPub;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 require __DIR__ . DS . 'libs' . DS . 'Translator.php';
+require __DIR__ . DS . 'libs' . DS . 'SecondTranslator.php';
 
 class TranslatorTest extends Tester\TestCase
 {
@@ -78,7 +79,7 @@ class TranslatorTest extends Tester\TestCase
 		$presenter = $this->createPresenter();
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', ['action' => 'use-translator', 'to-translate' => $toTranslate]);
+		$request = new Application\Request('Test', 'GET', ['action' => 'useTranslator', 'toTranslate' => $toTranslate]);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
@@ -92,12 +93,12 @@ class TranslatorTest extends Tester\TestCase
 		$presenter = $this->createPresenter();
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', ['action' => 'change-translator']);
+		$request = new Application\Request('Test', 'GET', ['action' => 'changeTranslator']);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
 		Assert::true($response instanceof Nette\Application\Responses\TextResponse);
-		Assert::equal('\IPubTests\Application\Libs\SecondTranslator', $response->getSource());
+		Assert::equal('IPubTests\Application\Libs\SecondTranslator', $response->getSource());
 	}
 
 	/**
