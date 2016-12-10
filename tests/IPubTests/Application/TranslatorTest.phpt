@@ -1,6 +1,6 @@
 <?php
 /**
- * Test: IPub\Permissions\TTranslator
+ * Test: IPub\Application\TTranslator
  * @testCase
  *
  * @copyright      More in license.md
