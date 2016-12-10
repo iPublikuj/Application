@@ -28,6 +28,8 @@ use Nette\Application\Responses;
  *
  * @method Application\UI\Presenter getPresenter()
  * @method string getUniqueId()
+ * @method redrawControl($snippet = NULL, $redraw = TRUE)
+ * @method redirect($code, $destination = NULL, $args = [])
  */
 trait TRedirect
 {
@@ -70,7 +72,7 @@ trait TRedirect
 	 *
 	 * @return void
 	 *
-	 * @throws Nette\Application\AbortException
+	 * @throws Application\AbortException
 	 */
 	public function forward($destination, $args = [])
 	{
@@ -99,7 +101,7 @@ trait TRedirect
 	/**
 	 * @return bool
 	 */
-	protected function isPresenter() : bool
+	private function isPresenter() : bool
 	{
 		if ($this instanceof Application\UI\Presenter) {
 			return TRUE;

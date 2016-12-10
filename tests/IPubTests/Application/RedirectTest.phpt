@@ -1,6 +1,6 @@
 <?php
 /**
- * Test: IPub\Application\TTranslator
+ * Test: IPub\Application\TRedirect
  * @testCase
  *
  * @copyright      More in license.md
@@ -19,6 +19,7 @@ namespace IPubTests\Application;
 
 use Nette;
 use Nette\Application;
+use Nette\Application\Routers;
 use Nette\Application\UI;
 
 use Tester;
@@ -26,14 +27,12 @@ use Tester\Assert;
 
 use IPub;
 
-use IPubTests\Application\Libs;
-
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 require __DIR__ . DS . 'libs' . DS . 'Translator.php';
 require __DIR__ . DS . 'libs' . DS . 'SecondTranslator.php';
 require __DIR__ . DS . 'libs' . DS . 'RouterFactory.php';
 
-class TranslatorTest extends Tester\TestCase
+class RedirectTest extends Tester\TestCase
 {
 	/**
 	 * @var Application\IPresenterFactory
@@ -69,38 +68,48 @@ class TranslatorTest extends Tester\TestCase
 		$this->presenterFactory = $this->container->getByType(Nette\Application\IPresenterFactory::class);
 	}
 
-	/**
-	 * @dataProvider dataUseTranslator
-	 *
-	 * @param string $toTranslate
-	 * @param string $expected
-	 */
-	public function testPresenterUseTranslator(string $toTranslate, string $expected)
+	public function testPresenterRedirect()
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', ['action' => 'useTranslator', 'toTranslate' => $toTranslate]);
+		$request = new Application\Request('Test', 'GET', ['action' => 'redirect', 'destination' => 'End:show']);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
-		Assert::true($response instanceof Nette\Application\Responses\TextResponse);
-		Assert::equal($expected, $response->getSource());
+		Assert::true($response instanceof Nette\Application\Responses\RedirectResponse);
+		Assert::equal('http://ipublikuj.eu/end/show', $response->getUrl());
 	}
 
-	public function testPresenterChangeTranslator()
+	public function testPresenterForward()
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
 
 		// Create GET request
-		$request = new Application\Request('Test', 'GET', ['action' => 'changeTranslator']);
+		$request = new Application\Request('Test', 'GET', ['action' => 'forward', 'destination' => 'End:show']);
+		// & fire presenter & catch response
+		$response = $presenter->run($request);
+
+		Assert::true($response instanceof Nette\Application\Responses\ForwardResponse);
+		Assert::equal('FORWARD', $response->getRequest()->getMethod());
+		Assert::equal('End', $response->getRequest()->getPresenterName());
+		Assert::equal(['action' => 'show'], $response->getRequest()->getParameters());
+	}
+
+	public function testPresenterAjaxRedirect()
+	{
+		// Create test presenter
+		$presenter = $this->createPresenter();
+
+		// Create GET request
+		$request = new Application\Request('Test', 'POST', ['action' => 'ajaxRedirect']);
 		// & fire presenter & catch response
 		$response = $presenter->run($request);
 
 		Assert::true($response instanceof Nette\Application\Responses\TextResponse);
-		Assert::equal('IPubTests\Application\Libs\SecondTranslator', $response->getSource());
+		Assert::equal('GET request finished', $response->getSource());
 	}
 
 	/**
@@ -131,23 +140,50 @@ class TranslatorTest extends Tester\TestCase
 	}
 }
 
+
+
 class TestPresenter extends UI\Presenter
 {
-	use IPub\Application\UI\TTranslator;
+	use IPub\Application\UI\TRedirect;
 
-	public function renderUseTranslator(string $toTranslate)
+	public function actionRedirect(string $destination)
 	{
-		$this->sendResponse(new Application\Responses\TextResponse($this->translator->translate($toTranslate)));
+		$this->go($destination);
 	}
 
-	public function renderChangeTranslator()
+	public function actionForward(string $destination)
 	{
-		$secondTranslator = new Libs\SecondTranslator();
+		$this->go($destination);
+	}
 
-		$this->setTranslator($secondTranslator);
+	public function actionAjaxRedirect()
+	{
+		if ($this->getRequest()->isMethod('post')) {
+			$this->go('this');
+		}
 
-		$this->sendResponse(new Application\Responses\TextResponse(get_class($this->getTranslator())));
+		$this->sendResponse(new Application\Responses\TextResponse('GET request finished'));
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isAjax()
+	{
+		if (in_array($this->action, ['ajaxRedirect', 'forward'], TRUE)) {
+			return TRUE;
+		}
+
+		return parent::isAjax();
 	}
 }
 
-\run(new TranslatorTest());
+class EndPresenter extends UI\Presenter
+{
+	public function renderDefault()
+	{
+		$this->sendResponse(new Application\Responses\TextResponse('Redirect complete'));
+	}
+}
+
+\run(new RedirectTest());

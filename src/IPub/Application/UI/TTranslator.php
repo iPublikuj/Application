@@ -34,6 +34,8 @@ trait TTranslator
 
 	/**
 	 * @param Localization\ITranslator $translator
+	 *
+	 * @return void
 	 */
 	public function injectTranslator(Localization\ITranslator $translator)
 	{
@@ -44,6 +46,8 @@ trait TTranslator
 	 * Set translator service
 	 *
 	 * @param Localization\ITranslator $translator
+	 * 
+	 * @return void
 	 */
 	public function setTranslator(Localization\ITranslator $translator)
 	{
@@ -54,6 +58,8 @@ trait TTranslator
 	 * Get app translator service
 	 *
 	 * @return Localization\ITranslator|NULL
+	 *
+	 * @return void
 	 */
 	public function getTranslator()
 	{
