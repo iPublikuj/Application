@@ -79,7 +79,7 @@ class RedirectTest extends Tester\TestCase
 		$response = $presenter->run($request);
 
 		Assert::true($response instanceof Nette\Application\Responses\RedirectResponse);
-		Assert::equal('http://ipublikuj.eu/end/show', $response->getUrl());
+		Assert::equal('http:///end/show', $response->getUrl());
 	}
 
 	public function testPresenterForward()
