@@ -65,7 +65,7 @@ class TranslatorTest extends Tester\TestCase
 	}
 
 	/**
-	 * Set up
+	 * {@inheritdoc}
 	 */
 	public function setUp()
 	{

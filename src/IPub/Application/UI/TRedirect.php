@@ -52,12 +52,11 @@ trait TRedirect
 		$presenter = ($this instanceof Application\UI\Presenter) ? $this : $this->getPresenter();
 
 		if ($presenter->isAjax()) {
-			if ($destination === 'this') {
-				foreach ($snippets as $snippet) {
-					$this->redrawControl($snippet);
-				}
+			foreach ($snippets as $snippet) {
+				$this->redrawControl($snippet);
+			}
 
-			} else {
+			if ($destination !== 'this') {
 				$this->forward($destination, $args);
 			}
 

@@ -64,7 +64,7 @@ class RedirectTest extends Tester\TestCase
 	}
 
 	/**
-	 * Set up
+	 * {@inheritdoc}
 	 */
 	public function setUp()
 	{
@@ -184,7 +184,7 @@ class TestPresenter extends UI\Presenter
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isAjax()
+	public function isAjax() : bool
 	{
 		if (in_array($this->action, ['ajaxRedirect', 'forward'], TRUE)) {
 			return TRUE;
