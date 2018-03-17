@@ -4,8 +4,8 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Application!
  * @subpackage     Tests
  * @since          1.1.0
@@ -67,7 +67,7 @@ class TranslatorTest extends Tester\TestCase
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
@@ -83,7 +83,7 @@ class TranslatorTest extends Tester\TestCase
 	 * @param string $toTranslate
 	 * @param string $expected
 	 */
-	public function testPresenterUseTranslator(string $toTranslate, string $expected)
+	public function testPresenterUseTranslator(string $toTranslate, string $expected) : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -97,7 +97,7 @@ class TranslatorTest extends Tester\TestCase
 		Assert::equal($expected, $response->getSource());
 	}
 
-	public function testPresenterChangeTranslator()
+	public function testPresenterChangeTranslator() : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();

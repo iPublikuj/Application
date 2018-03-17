@@ -3,8 +3,8 @@
  * TRedirect.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Application!
  * @subpackage     UI
  * @since          1.0.0
@@ -16,7 +16,6 @@ declare(strict_types = 1);
 
 namespace IPub\Application\UI;
 
-use Nette;
 use Nette\Application;
 use Nette\Application\Responses;
 
@@ -46,7 +45,7 @@ trait TRedirect
 	 *
 	 * @throws Application\AbortException
 	 */
-	final public function go($destination, $args = [], $snippets = [])
+	final public function go($destination, $args = [], $snippets = []) : void
 	{
 		// Get presenter object
 		$presenter = ($this instanceof Application\UI\Presenter) ? $this : $this->getPresenter();
@@ -75,7 +74,7 @@ trait TRedirect
 	 *
 	 * @throws Application\AbortException
 	 */
-	public function forward($destination, $args = [])
+	public function forward($destination, $args = []) : void
 	{
 		if (!$this->isPresenter()) {
 			$name = $this->getUniqueId();

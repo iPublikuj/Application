@@ -4,8 +4,8 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Application!
  * @subpackage     Tests
  * @since          1.1.0
@@ -28,8 +28,13 @@ use Nette\Localization;
  *
  * @author         Adam Kadlec <adam.kadlec@ipublikuj.eu>
  */
-class Translator extends Nette\Object implements Localization\ITranslator
+class Translator implements Localization\ITranslator
 {
+	/**
+	 * Implement nette smart magic
+	 */
+	use Nette\SmartObject;
+
 	/**
 	 * {@inheritdoc}
 	 */

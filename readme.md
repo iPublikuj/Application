@@ -22,5 +22,5 @@ $ composer require ipub/application
 Learn how to use this traits in [documentation](https://github.com/iPublikuj/application/blob/master/docs/en/index.md).
 
 ***
-Homepage [http://www.ipublikuj.eu](http://www.ipublikuj.eu) and repository [http://github.com/iPublikuj/application](http://github.com/iPublikuj/application).
+Homepage [https://www.ipublikuj.eu](https://www.ipublikuj.eu) and repository [http://github.com/iPublikuj/application](http://github.com/iPublikuj/application).
 

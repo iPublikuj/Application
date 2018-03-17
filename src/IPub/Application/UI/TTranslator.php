@@ -3,8 +3,8 @@
  * TTranslator.php
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Application!
  * @subpackage     UI
  * @since          1.0.0
@@ -16,7 +16,6 @@ declare(strict_types = 1);
 
 namespace IPub\Application\UI;
 
-use Nette;
 use Nette\Localization;
 
 /**
@@ -39,7 +38,7 @@ trait TTranslator
 	 *
 	 * @return void
 	 */
-	public function injectTranslator(Localization\ITranslator $translator)
+	public function injectTranslator(Localization\ITranslator $translator) : void
 	{
 		$this->translator = $translator;
 	}
@@ -51,7 +50,7 @@ trait TTranslator
 	 * 
 	 * @return void
 	 */
-	public function setTranslator(Localization\ITranslator $translator)
+	public function setTranslator(Localization\ITranslator $translator) : void
 	{
 		$this->translator = $translator;
 	}
@@ -60,10 +59,8 @@ trait TTranslator
 	 * Get app translator service
 	 *
 	 * @return Localization\ITranslator|NULL
-	 *
-	 * @return void
 	 */
-	public function getTranslator()
+	public function getTranslator() : ?Localization\ITranslator
 	{
 		if ($this->translator instanceof Localization\ITranslator) {
 			return $this->translator;

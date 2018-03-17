@@ -4,8 +4,8 @@
  * @testCase
  *
  * @copyright      More in license.md
- * @license        http://www.ipublikuj.eu
- * @author         Adam Kadlec http://www.ipublikuj.eu
+ * @license        https://www.ipublikuj.eu
+ * @author         Adam Kadlec https://www.ipublikuj.eu
  * @package        iPublikuj:Application!
  * @subpackage     Tests
  * @since          1.1.0
@@ -66,7 +66,7 @@ class RedirectTest extends Tester\TestCase
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
@@ -76,7 +76,7 @@ class RedirectTest extends Tester\TestCase
 		$this->presenterFactory = $this->container->getByType(Nette\Application\IPresenterFactory::class);
 	}
 
-	public function testPresenterRedirect()
+	public function testPresenterRedirect() : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -90,7 +90,7 @@ class RedirectTest extends Tester\TestCase
 		Assert::equal('http:///end/show', $response->getUrl());
 	}
 
-	public function testPresenterForward()
+	public function testPresenterForward() : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -106,7 +106,7 @@ class RedirectTest extends Tester\TestCase
 		Assert::equal(['action' => 'show'], $response->getRequest()->getParameters());
 	}
 
-	public function testPresenterAjaxRedirect()
+	public function testPresenterAjaxRedirect() : void
 	{
 		// Create test presenter
 		$presenter = $this->createPresenter();
@@ -145,12 +145,7 @@ class RedirectTest extends Tester\TestCase
 
 		$version = getenv('NETTE');
 
-		if (!$version || $version == 'default') {
-			$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters.neon');
-
-		} else {
-			$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters_2.3.neon');
-		}
+		$config->addConfig(__DIR__ . DS . 'files' . DS . 'presenters.neon');
 
 		return $config->createContainer();
 	}
