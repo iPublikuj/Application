@@ -19,7 +19,6 @@ namespace IPubTests\Application;
 
 use Nette;
 use Nette\Application;
-use Nette\Application\Routers;
 use Nette\Application\UI;
 
 use Tester;
